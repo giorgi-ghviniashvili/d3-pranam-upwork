@@ -12,6 +12,37 @@
   </head>
   <body>
     <script type="text/javascript">
+      Array.prototype.groupBy = function (props) {
+       var arr = this;
+       var partialResult = {};
+       
+       arr.forEach(el=>{
+       
+           var grpObj = {};
+           
+           props.forEach(prop=>{
+                 grpObj[prop] = el[prop]
+           });
+           
+           var key = JSON.stringify(grpObj);
+           
+           if(!partialResult[key]) partialResult[key] = [];
+           
+           partialResult[key].push(el);
+           
+       });
+       
+       var finalResult = Object.keys(partialResult).map(key=>{
+          var keyObj = JSON.parse(key);
+          keyObj.values = partialResult[key];
+          return keyObj;
+       })
+       
+       return finalResult;
+    }
+    </script>
+    <script type="text/javascript">
+
       var width = 1000;
       var height = 600;
 
@@ -28,24 +59,10 @@
                   .attr("width", width)
                   .attr("height", height);
 
-      svg.append("text")
-         .attr("x", 10)
-         .attr("y", 10)
-         .text("Career Level");
-
-       svg.append("text")
-         .attr("x", width - 100)
-         .attr("y", 10)
-         .text("Career Level");
-
-      svg.selectAll(".levelText")
-         .data(d3.range(numOflevels), d => {return d;})
-         .enter()
-         .append("text")
-         .attr("class", 'levelText')
-         .attr("x",20)
-         .attr("y", d => {return yScale(d);})
-         .text(d => {return d;});
+      d3.csv("data.csv", function(data){
+        var _data = data.groupBy(["LevelNum"]);
+        
+      });
 
 
     </script>

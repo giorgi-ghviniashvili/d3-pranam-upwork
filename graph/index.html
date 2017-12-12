@@ -10,77 +10,89 @@
 
     </style>
   </head>
-  <svg width="100" height="100">
-  <path d=" M 10 40
-            L 60 40
-            L 60 35
-            L 90 60
-            L 60 80
-            L 60 75
-            L 10 75
-            L 10 40 "
-            stroke="none" stroke-width="2" fill="light-blue" />
-</svg>
   <body>
+    <script type="text/javascript" src="utils.js"></script>
     <script type="text/javascript">
-      Array.prototype.groupBy = function (props) {
-       var arr = this;
-       var partialResult = {};
-       
-       arr.forEach(el=>{
-       
-           var grpObj = {};
-           
-           props.forEach(prop=>{
-                 grpObj[prop] = el[prop]
-           });
-           
-           var key = JSON.stringify(grpObj);
-           
-           if(!partialResult[key]) partialResult[key] = [];
-           
-           partialResult[key].push(el);
-           
-       });
-       
-       var finalResult = Object.keys(partialResult).map(key=>{
-          var keyObj = JSON.parse(key);
-          keyObj.values = partialResult[key];
-          return keyObj;
-       })
-       
-       return finalResult;
-    }
-    </script>
-    <script type="text/javascript">
-
       var width = 1000;
-      var height = 600;
-
-      var numOflevels = 6;
-
-      var yScale = d3.scaleBand()
-              .domain(d3.range(numOflevels))
-              .rangeRound([20, height])
-              .paddingInner(0.05)
-              .paddingOuter(0.5);
+      var height = 700;
 
       var svg = d3.select("body")
                   .append("svg")
                   .attr("width", width)
                   .attr("height", height);
-
+      var dataPoints = ["Hires", "Total Employees", "Exits"];
       d3.csv("data.csv", function(data){
-        var _data = data.groupBy(["LevelNum"]);
-        console.log(_data);
+        var _data = data.orderByDescending(d=>d.LevelNum).groupBy(["LevelNum"]);
+
+        var yScale = d3.scaleBand()
+              .domain(d3.range(_data.length))
+              .rangeRound([10, height])
+              .paddingInner(0.05)
+              .paddingOuter(0.5);
+        var xScale = d3.scaleBand()
+              .domain(dataPoints)
+              .rangeRound([10, width])
+              .paddingInner(0.05)
+              .paddingOuter(0.5);
+
+        svg.append("text")
+            .attr("x", d => {return xScale("Hires");})
+            .attr("y", d => {return 15;})
+            .text("Hires");
+
+        svg.append("text")
+            .attr("x", d => {return xScale("Total Employees");})
+            .attr("y", d => {return 15;})
+            .text("Total Employees");
+
+        svg.append("text")
+            .attr("x", d => {return xScale("Exits");})
+            .attr("y", d => {return 15;})
+           .text("Exits");
+
+        var count = 0;
+        for(var i = 0; i < _data.length; i++){
+          var currentData = _data[i];
+          var total = currentData.values.where(x => x["Data Point"] == "Total Employees");
+          var totalInt = +total[0].Value + (+total[1].Value);
+          var groupedByDataPoint = currentData.values.groupBy(["Data Point"]);
+          for(var j = 0; j < groupedByDataPoint.length; j++){
+            var currentGroupedData = groupedByDataPoint[j].values;
+            if (dataPoints.indexOf(groupedByDataPoint[j]["Data Point"]) > -1)
+            {
+              var thisData = currentGroupedData[0];
+              var value = +currentGroupedData[0].Value + (+currentGroupedData[1].Value);
+              svg.selectAll("text.labels")
+                 .data([thisData], d => {return d["Id"];})
+                 .enter()
+                 .append("text")
+                 .attr("class", "labels")
+                 .attr("y", d => {return yScale(count);})
+                 .attr("x", d => {return xScale(d["Data Point"]);})
+                 .text(value);
+
+             svg.selectAll("text.percent")
+               .data([thisData], d => {return d["Id"];})
+               .enter()
+               .append("text")
+               .attr("class", "percent")
+               .attr("y", d => {return yScale(count) + 20;})
+               .attr("x", d => {return xScale(d["Data Point"]);})
+               .text("( " + (Math.round((value / totalInt)*100).toFixed(2)) + "% )");
+            }
+          }
+          count+=1;
+        }
+
       });
-      var arrowData = {
-        rectHeight: 35, 
-        rectWidth: 35,
-        wingHeight: 5,
-        headWidth: 10
-      };
-      function drawArrow(startX, startY, arrowData){
+      
+      function drawArrow(startX, startY, size){
+        var arrowData = {
+          rectHeight: size, 
+          rectWidth: size,
+          wingHeight: size / 4,
+          headWidth: size / 2
+        };
         var d = "";
         d += " M " + startX + " " + startY;
         var newX = (startX + arrowData.rectWidth);
@@ -89,10 +101,12 @@
         newY =  startY - arrowData.wingHeight;
         d += " L " + newX + " " + newY;
         newX = newX + arrowData.headWidth;
-        newY = startY + arrowData.rectHeight / 2 + arrowData.wingHeight;
+        newY = startY + arrowData.rectHeight / 2;
+
         d += " L " + newX + " " + newY;
         newX = newX - arrowData.headWidth;
         newY = newY + arrowData.rectHeight / 2 + arrowData.wingHeight;
+
         d += " L " + newX + " " + newY;
         newY = newY - arrowData.wingHeight;
         d += " L " + newX + " " + newY;
@@ -101,11 +115,8 @@
         d += " L " + startX + " " + startX;
         return d;
       }
-      
-      svg
-      .append("path")
-      .attr("d", drawArrow(10, 200, arrowData))
-      .attr("fill", "red");
+     
+
     </script>
   </body>
 </html>  

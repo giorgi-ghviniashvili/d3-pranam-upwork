@@ -6,6 +6,7 @@
       svg{
         display: block;
         margin: auto;
+        margin-top: 40px;
       }
 
     </style>
@@ -55,6 +56,17 @@
           var currentData = _data[i];
           var total = currentData.values.where(x => x["Data Point"] == "Total Employees");
           var totalInt = +total[0].Value + (+total[1].Value);
+          svg.selectAll("rect.totalEmp")
+             .data([total[0]], d => {return d.Id;})
+             .enter()
+             .append("rect")
+             .attr("class", "totalEmp")
+             .attr("width", 120)
+             .attr("height", 60)
+             .attr("x", d => {return xScale("Total Employees") - 20;})
+             .attr("y", d => {return yScale(count) - 25;})
+             .style("fill", "#a4c5fc")
+
           var groupedByDataPoint = currentData.values.groupBy(["Data Point"]);
           for(var j = 0; j < groupedByDataPoint.length; j++){
             var currentGroupedData = groupedByDataPoint[j].values;
@@ -62,6 +74,8 @@
             {
               var thisData = currentGroupedData[0];
               var value = +currentGroupedData[0].Value + (+currentGroupedData[1].Value);
+
+
               svg.selectAll("text.labels")
                  .data([thisData], d => {return d["Id"];})
                  .enter()

@@ -14,96 +14,10 @@
   <body>
     <script type="text/javascript" src="utils.js"></script>
     <script type="text/javascript">
-      var width = 1000;
-      var height = 700;
-
-      var svg = d3.select("body")
-                  .append("svg")
-                  .attr("width", width)
-                  .attr("height", height);
-      var dataPoints = ["Hires", "Total Employees", "Exits"];
-      d3.csv("data.csv", function(data){
-        var _data = data.orderByDescending(d=>d.LevelNum).groupBy(["LevelNum"]);
-
-        var yScale = d3.scaleBand()
-              .domain(d3.range(_data.length))
-              .rangeRound([10, height])
-              .paddingInner(0.05)
-              .paddingOuter(0.5);
-        var xScale = d3.scaleBand()
-              .domain(dataPoints)
-              .rangeRound([10, width])
-              .paddingInner(0.05)
-              .paddingOuter(0.5);
-
-        svg.append("text")
-            .attr("x", d => {return xScale("Hires");})
-            .attr("y", d => {return 15;})
-            .text("Hires");
-
-        svg.append("text")
-            .attr("x", d => {return xScale("Total Employees");})
-            .attr("y", d => {return 15;})
-            .text("Total Employees");
-
-        svg.append("text")
-            .attr("x", d => {return xScale("Exits");})
-            .attr("y", d => {return 15;})
-           .text("Exits");
-
-        var count = 0;
-        for(var i = 0; i < _data.length; i++){
-          var currentData = _data[i];
-          var total = currentData.values.where(x => x["Data Point"] == "Total Employees");
-          var totalInt = +total[0].Value + (+total[1].Value);
-          svg.selectAll("rect.totalEmp")
-             .data([total[0]], d => {return d.Id;})
-             .enter()
-             .append("rect")
-             .attr("class", "totalEmp")
-             .attr("width", 120)
-             .attr("height", 60)
-             .attr("x", d => {return xScale("Total Employees") - 20;})
-             .attr("y", d => {return yScale(count) - 25;})
-             .style("fill", "#a4c5fc")
-
-          var groupedByDataPoint = currentData.values.groupBy(["Data Point"]);
-          for(var j = 0; j < groupedByDataPoint.length; j++){
-            var currentGroupedData = groupedByDataPoint[j].values;
-            if (dataPoints.indexOf(groupedByDataPoint[j]["Data Point"]) > -1)
-            {
-              var thisData = currentGroupedData[0];
-              var value = +currentGroupedData[0].Value + (+currentGroupedData[1].Value);
-
-
-              svg.selectAll("text.labels")
-                 .data([thisData], d => {return d["Id"];})
-                 .enter()
-                 .append("text")
-                 .attr("class", "labels")
-                 .attr("y", d => {return yScale(count);})
-                 .attr("x", d => {return xScale(d["Data Point"]);})
-                 .text(value);
-
-             svg.selectAll("text.percent")
-               .data([thisData], d => {return d["Id"];})
-               .enter()
-               .append("text")
-               .attr("class", "percent")
-               .attr("y", d => {return yScale(count) + 20;})
-               .attr("x", d => {return xScale(d["Data Point"]);})
-               .text("( " + (Math.round((value / totalInt)*100).toFixed(2)) + "% )");
-            }
-          }
-          count+=1;
-        }
-
-      });
-      
-      function drawArrow(startX, startY, size){
+      function drawRightArrow(startX, startY, size){
         var arrowData = {
           rectHeight: size, 
-          rectWidth: size,
+          rectWidth: size / 2,
           wingHeight: size / 4,
           headWidth: size / 2
         };
@@ -126,10 +40,214 @@
         d += " L " + newX + " " + newY;
         newX = startX;
         d += " L " + newX + " " + newY;
-        d += " L " + startX + " " + startX;
+        d += " L " + startX + " " + startY;
+        return d;
+      }
+
+      function drawUpArrow(startX, startY, size){
+        var arrowData = {
+          rectHeight: size, 
+          rectWidth: size / 2,
+          wingHeight: size / 4,
+          headWidth: size / 2
+        };
+        var d = "";
+        d += " M " + startX + " " + startY;
+        var newX = (startX);
+        var newY = startY - arrowData.rectWidth;       
+        d += " L " + newX + " " + newY;
+        newX =  startX - arrowData.wingHeight;
+        d += " L " + newX + " " + newY;
+        newY = newY - arrowData.headWidth;
+        newX = startX + arrowData.rectHeight / 2;
+
+        d += " L " + newX + " " + newY;
+        newX = newX + arrowData.rectHeight / 2 + arrowData.wingHeight;
+        newY = newY + arrowData.headWidth;
+
+        d += " L " + newX + " " + newY;
+        newX = newX - arrowData.wingHeight;
+        d += " L " + newX + " " + newY;
+        newY = startY;
+        d += " L " + newX + " " + newY;
+        d += " L " + startX + " " + startY;
         return d;
       }
      
+      function drawDownArrow(startX, startY, size){
+        var arrowData = {
+          rectHeight: size, 
+          rectWidth: size / 2, 
+          wingHeight: size / 4,
+          headWidth: size / 2
+        };
+        var d = "";
+        // put the point
+        d += " M " + startX + " " + startY;
+        var newX = (startX + arrowData.rectHeight);
+        var newY = startY;  
+        // go right     
+        d += " L " + newX + " " + newY;
+        newY =  startY + arrowData.rectWidth;
+        // go down
+        d += " L " + newX + " " + newY;
+        newX = newX + arrowData.wingHeight;
+        // go right and draw wing
+        d += " L " + newX + " " + newY;
+        newX = newX - arrowData.rectHeight / 2 - arrowData.wingHeight;
+        newY = newY + arrowData.wingHeight;
+        // draw half of the head
+        d += " L " + newX + " " + newY;
+        newY = newY - arrowData.wingHeight;
+        newX = newX - arrowData.rectHeight / 2 - arrowData.wingHeight;
+        // draw second half of the head
+        d += " L " + newX + " " + newY;
+        newX = startX;
+        // draw second wing
+        d += " L " + newX + " " + newY;
+        // return to start point
+        d += " L " + startX + " " + startY;
+        return d;
+      }
+
+    </script>
+    <script type="text/javascript">
+      var width = 1300;
+      var height = 700;
+
+      var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height);
+      var dataPoints = ["Hires", "Total Employees", "Exits"];
+      d3.csv("data.csv", function(data){
+        var _data = data.orderByDescending(d=>d.LevelNum).groupBy(["LevelNum"]);
+
+        var yScale = d3.scaleBand()
+              .domain(d3.range(_data.length))
+              .rangeRound([10, height])
+              .paddingInner(0.05)
+              .paddingOuter(0.5);
+        var xScale = d3.scaleBand()
+              .domain(dataPoints)
+              .rangeRound([10, width])
+              .paddingInner(0.05)
+              .paddingOuter(0.5);
+
+        var rectScale = d3.scaleLinear()
+              .domain([0, d3.max(data, d => {return +d.Value;})])
+              .rangeRound([0, xScale.bandwidth()])
+
+        var promoDemotionsScale = d3.scaleBand()
+              .domain(d3.range(6))
+              .rangeRound([xScale(["Total Employees"]), xScale(["Exits"])])
+              .paddingInner(0.05)
+              .paddingOuter(0.5);
+
+        var centralizeX = function(dataPoint, offset = 0){
+            return xScale(dataPoint)  + xScale.bandwidth() / 2 + offset;
+        }
+
+        svg.append("text")
+            .attr("x", d => {return centralizeX("Hires", -10);})
+            .attr("y", d => {return 15;})
+            .text("Hires");
+
+        svg.append("text")
+            .attr("x", d => {return centralizeX("Total Employees", -45);})
+            .attr("y", d => {return 15;})
+            .text("Total Employees");
+
+        svg.append("text")
+            .attr("x", d => {return centralizeX("Exits", -10);})
+            .attr("y", d => {return 15;})
+           .text("Exits");
+
+        var count = 0;
+        for(var i = 0; i < _data.length; i++){
+          var currentData = _data[i];
+          var total = currentData.values.where(x => x["Data Point"] == "Total Employees");
+          var totalInt = +total[0].Value + (+total[1].Value);
+          svg.selectAll("rect.totalEmp")
+             .data([total[0]], d => {return d.Id;})
+             .enter()
+             .append("rect")
+             .attr("class", "totalEmp")
+             .attr("width", d => {return rectScale(+d.Value);})
+             .attr("height", 60)
+             .attr("x", d => {return centralizeX("Total Employees", -1 * (rectScale(+d.Value) / 2));})
+             .attr("y", d => {return yScale(count) - 25;})
+             .style("fill", "#42b6f4");
+
+          var groupedByDataPoint = currentData.values.groupBy(["Data Point"]);
+          for(var j = 0; j < groupedByDataPoint.length; j++){
+            var currentGroupedData = groupedByDataPoint[j].values;
+            var thisData = currentGroupedData[0];
+            if (dataPoints.indexOf(groupedByDataPoint[j]["Data Point"]) > -1)
+            {
+              
+              var value = +currentGroupedData[0].Value + (+currentGroupedData[1].Value);
+
+
+              svg.selectAll("text.labels")
+                 .data([thisData], d => {return d["Id"];})
+                 .enter()
+                 .append("text")
+                 .attr("class", "labels")
+                 .attr("y", d => {return yScale(count);})
+                 .attr("x", d => {return centralizeX(d["Data Point"], -18);})
+                 .text(value);
+
+              if (groupedByDataPoint[j]["Data Point"] != "Total Employees"){
+                 svg.selectAll("text.percent")
+                   .data([thisData], d => {return d["Id"];})
+                   .enter()
+                   .append("text")
+                   .attr("class", "percent")
+                   .attr("y", d => {return yScale(count) + 20;})
+                   .attr("x", d => {return centralizeX(d["Data Point"], -18);})
+                   .text("( " + (Math.round((value / totalInt)*100).toFixed(2)) + "% )");
+              }
+            }
+            else {
+                // draw promotions
+               if (groupedByDataPoint[j]["Data Point"] == "Promotions" && +thisData["Value"] > 0){
+                 var startX = promoDemotionsScale(1);
+                 var startY = yScale(count) - 30;
+                 console.log(startX);
+                 
+                 svg.selectAll("path.upArrow")
+                    .data([thisData], d => {return d["Id"];})
+                    .enter()
+                    .append("path")
+                    .attr("class", "upArrow")
+                    .attr("d", drawUpArrow(startX, startY, 25))
+                    .attr("fill", "green");
+
+                }
+
+               // draw demotions
+               if (groupedByDataPoint[j]["Data Point"] == "Demotions" && +thisData["Value"] > 0){
+                 var startX = promoDemotionsScale(4);
+                 var startY = yScale(count) - 50;
+                 console.log(startX);
+                 // draw promotions
+                 svg.selectAll("path.downArrow")
+                    .data([thisData], d => {return d["Id"];})
+                    .enter()
+                    .append("path")
+                    .attr("class", "downArrow")
+                    .attr("d", drawDownArrow(startX, startY, 25))
+                    .attr("fill", "#fc94e5");
+
+                }
+            }
+          }
+          count+=1;
+        }
+
+      });
+      
 
     </script>
   </body>

@@ -18,7 +18,7 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 17,2,General Staff,Promotions,Female,71
 18,2,General Staff,Promotions,Male,64
 19,2,General Staff,Total Employees,Female,730
-20,2,General Staff,Total Employees,Male,5264
+20,2,General Staff,Total Employees,Male,564
 21,3,Junior Manager,Demotions,Female,0
 22,3,Junior Manager,Demotions,Male,0
 23,3,Junior Manager,Exits,Female,235
@@ -27,18 +27,18 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 26,3,Junior Manager,Hires,Male,53
 27,3,Junior Manager,Promotions,Female,56
 28,3,Junior Manager,Promotions,Male,40
-29,3,Junior Manager,Total Employees,Female,5192
-30,3,Junior Manager,Total Employees,Male,2246
+29,3,Junior Manager,Total Employees,Female,592
+30,3,Junior Manager,Total Employees,Male,246
 31,4,Middle Manager,Exits,Female,18
 32,4,Middle Manager,Exits,Male,41
 33,4,Middle Manager,Hires,Female,22
 34,4,Middle Manager,Hires,Male,34
-35,4,Middle Manager,Total Employees,Female,1087
+35,4,Middle Manager,Total Employees,Female,187
 36,4,Middle Manager,Total Employees,Male,519
 37,4,Middle Manager,Promotions,Female,33
 38,4,Middle Manager,Promotions,Male,9
 39,4,Middle Manager,Demotions,Female,0
-40,4,Middle Manager,Demotions,Male,0
+40,4,Middle Manager,Demotions,Male,10
 41,5,Senior Manager,Hires,Female,15
 42,5,Senior Manager,Hires,Male,7
 43,5,Senior Manager,Total Employees,Female,426

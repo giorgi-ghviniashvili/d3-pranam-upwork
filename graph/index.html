@@ -8,18 +8,95 @@
         margin: auto;
         margin-top: 40px;
       }
+      /* The container */
+.container {
+    
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+.radio-buttons{
+  text-align: center;
+}
+.secondView{
+  display: none;
+}
     </style>
   </head>
   <body>
+    <div class="radio-buttons">
+      <label class="container">Total
+      <input type="radio" checked="checked" name="radio" onclick="switchCategory(1)">
+      <span class="checkmark"></span>
+     </label>
+      <label class="container">Categories
+      <input type="radio" name="radio" onclick="switchCategory(2)">
+      <span class="checkmark"></span>
+      </label>
+    </div>
     <script type="text/javascript" src="utils.js"></script>
     <script type="text/javascript">
       function drawRightArrow(startX, startY, size){
         var arrowData = {
-          rectHeight: size, 
-          rectWidth: size / 2,
-          wingHeight: size / 4,
-          headWidth: size / 2
+          rectHeight: 35, 
+          rectWidth: size,
+          wingHeight: size / 6,
+          headWidth: size / 6
         };
         var d = "";
         d += " M " + startX + " " + startY;
@@ -113,29 +190,100 @@
     <script type="text/javascript">
       var width = 1300;
       var height = 700;
-
       var svg = d3.select("body")
                   .append("svg")
                   .attr("width", width)
                   .attr("height", height);
+
       var dataPoints = ["Hires", "Total Employees", "Exits"];
+
+      var categoryColors = ["ccc", "#56217a"];
+
+      function switchCategory(value){
+        var firstView = document.getElementsByClassName('firstView');
+        var secondView = document.getElementsByClassName('secondView');
+
+        if (value == 1){
+          
+          for(var i = 0; i < firstView.length; i++){
+
+            firstView[i].style.display = "block";
+
+          }
+
+          for(var i = 0; i < secondView.length; i++){
+
+            secondView[i].style.display = "none";
+
+          }
+
+        }
+        else {
+          for(var i = 0; i < firstView.length; i++){
+
+            firstView[i].style.display = "none";
+
+          }
+
+          for(var i = 0; i < secondView.length; i++){
+
+            secondView[i].style.display = "block";
+
+          }
+          
+        }
+      }
+
       d3.csv("data.csv", function(data){
         var _data = data.orderByDescending(d=>d.LevelNum).groupBy(["LevelNum"]);
+        var categories = [];
+        var hiresAndExits = [];
+        var filteredData = data.where(x => x["Data Point"] == "Hires" || x["Data Point"] == "Exits").orderBy(d => d.LevelNum);
+        for (var i = 0; i < filteredData.length; i+=2) {
+          hiresAndExits.push(+filteredData[i].Value + (+filteredData[i + 1].Value));
+        }
+        console.log(hiresAndExits);
+        _data[0].values.groupBy(["Category"]).forEach(x => {
+            categories.push(x["Category"]);
+        });
+
+        svg.selectAll("rect.category")
+           .data(categories)
+           .enter()
+           .append("rect")
+           .attr("class", "category secondView")
+           .attr("x", width - 80)
+           .attr("y", d => {return categories.indexOf(d) * 30;})
+           .attr("width", 80)
+           .attr("height", 30)
+           .style("fill", d => {return categoryColors[categories.indexOf(d)];});
+
+        svg.selectAll("text.category")
+           .data(categories)
+           .enter()
+           .append("text")
+           .attr("class", "category secondView")
+           .attr("x", width - 130)
+           .attr("y", d => {return categories.indexOf(d) * 30 + 25;})
+           .text(d => {return d;})
+           .style("fill", d => {return categoryColors[categories.indexOf(d)];});
+        
 
         var yScale = d3.scaleBand()
               .domain(d3.range(_data.length))
-              .rangeRound([10, height])
+              .rangeRound([0, height])
               .paddingInner(0.05)
               .paddingOuter(0.5);
+
         var xScale = d3.scaleBand()
               .domain(dataPoints)
-              .rangeRound([10, width])
+              .rangeRound([0, width])
               .paddingInner(0.05)
               .paddingOuter(0.5);
 
         var rectScale = d3.scaleLinear()
               .domain([0, d3.max(data, d => {return +d.Value;})])
-              .rangeRound([0, xScale.bandwidth()])
+              .rangeRound([50, xScale.bandwidth()]);
 
         var promoDemotionsScale = d3.scaleBand()
               .domain(d3.range(6))
@@ -143,15 +291,19 @@
               .paddingInner(0.05)
               .paddingOuter(0.5);
 
+        var arrowScale = d3.scaleLinear()
+              .domain([0, d3.max(hiresAndExits)])
+              .rangeRound([0, 120]);
+
+
         var centralizeX = function(dataPoint, offset = 0){
             return xScale(dataPoint)  + xScale.bandwidth() / 2 + offset;
         }
 
         svg.append("text")
-            .attr("x", d => {return centralizeX("Hires", -120);})
+            .attr("x", d => {return xScale("Hires");})
             .attr("y", d => {return 15;})
             .text("Career Level");
-
 
         svg.append("text")
             .attr("x", d => {return centralizeX("Hires", -10);})
@@ -170,10 +322,17 @@
 
         var count = 0;
         for(var i = 0; i < _data.length; i++){
+          
           var currentData = _data[i];
           var total = currentData.values.where(x => x["Data Point"] == "Total Employees");
-          var totalInt = +total[0].Value + (+total[1].Value);
+          var totalObj = {Value: +total[0].Value + (+total[1].Value), Id: ~(+total[0].Id * +total[1].Id)};
           var groupedByDataPoint = currentData.values.groupBy(["Data Point"]);
+
+          var cat1Width = rectScale(+total[0].Value);
+          var cat2Width = rectScale(+total[1].Value);
+          var centerPoint = centralizeX("Total Employees");
+          var totalWidth = cat1Width + cat2Width;
+
 
           svg.selectAll("text.level")
                  .data([currentData], d => {return d["LevelNum"];})
@@ -181,80 +340,174 @@
                  .append("text")
                  .attr("class", "level")
                  .attr("y", d => {return yScale(count);})
-                 .attr("x", d => {return centralizeX("Hires", -80);})
+                 .attr("x", d => {return xScale("Hires") + 30;})
                  .text(d => {return d["LevelNum"]});
 
           svg.selectAll("rect.totalEmp")
-             .data([total[0]], d => {return d.Id;})
+             .data([totalObj], d => {return d.Id;})
              .enter()
              .append("rect")
-             .attr("class", "totalEmp")
-             .attr("width", d => {return rectScale(+d.Value);})
+             .attr("class", "totalEmp firstView")
+             .attr("width", d => {return rectScale(totalObj.Value);})
              .attr("height", 40)
-             .attr("x", d => {return centralizeX("Total Employees", -1 * (rectScale(+d.Value) / 2));})
+             .attr("x", d => {return centralizeX("Total Employees", -1 * (rectScale(totalObj.Value) / 2));})
              .attr("y", d => {return yScale(count) - 25;})
              .style("fill", "#4286f4");
 
+          svg.selectAll("rect.cat1")
+             .data([total[0]], d => {return d.Id;})
+             .enter()
+             .append("rect")
+             .attr("class", "cat1 secondView")
+             .attr("width", cat1Width)
+             .attr("height", 40)
+             .attr("x", centerPoint - totalWidth / 2)
+             .attr("y", d => {return yScale(count) - 25;})
+             .style("fill", categoryColors[0]);
           
+          svg.selectAll("rect.cat2")
+             .data([total[1]], d => {return d.Id;})
+             .enter()
+             .append("rect")
+             .attr("class", "cat2 secondView")
+             .attr("width", cat2Width)
+             .attr("height", 40)
+             .attr("x", centerPoint - totalWidth / 2 + cat1Width)
+             .attr("y", d => {return yScale(count) - 25;})
+             .style("fill", categoryColors[1]);
+
           for(var j = 0; j < groupedByDataPoint.length; j++){
 
             var currentGroupedData = groupedByDataPoint[j].values;
             var value = +currentGroupedData[0].Value + (+currentGroupedData[1].Value);
-            var thisData = currentGroupedData[0];
-            if (dataPoints.indexOf(groupedByDataPoint[j]["Data Point"]) > -1)
-            {
-              svg.selectAll("text.labels")
-                 .data([thisData], d => {return d["Id"];})
-                 .enter()
-                 .append("text")
-                 .attr("class", "labels")
-                 .attr("y", d => {return yScale(count);})
-                 .attr("x", d => {return centralizeX(d["Data Point"], -18);})
-                 .text(value);
+            var totalValue = { 
+                               Id: currentGroupedData[0].Id,
+                               LevelNum: currentGroupedData[0].LevelNum,
+                               LevelName: currentGroupedData[0].LevelName, 
+                               "Data Point": currentGroupedData[0]["Data Point"],
+                               Category: currentGroupedData[0].Category,
+                               Value: currentGroupedData[0].Value 
+                             };
+            // update the Id
+            totalValue.Id = ~+totalValue.Id;
+            // update the Value
+            totalValue.Value = value;
+            if (groupedByDataPoint[j]["Data Point"] == "Hires" || groupedByDataPoint[j]["Data Point"] == "Exits"){
 
-              if (groupedByDataPoint[j]["Data Point"] == "Hires" || groupedByDataPoint[j]["Data Point"] == "Exits"){
                 svg.selectAll("path.hiresAndExits")
-                   .data([thisData], d => {return d["Id"];})
+                   .data([totalValue], d => {return d["Id"];})
                    .enter()
                    .append("path")
-                   .attr("class", "hiresAndExits")
-                   .attr("d", d => {return drawRightArrow(centralizeX(d["Data Point"], +52), yScale(count) - 20, 30);})
+                   .attr("class", "hiresAndExits firstView")
+                   .attr("d", d => {return drawRightArrow(centralizeX(d["Data Point"], -25), yScale(count) - 22, arrowScale(value));})
                    .attr("fill", "#42b6f4");
+
+                var cat1RectWidth = arrowScale(+currentGroupedData[0]["Value"]);
+                var cat2ArrowWidth = arrowScale(+currentGroupedData[1]["Value"]);
+                var arrowStartX = centralizeX(currentGroupedData[0]["Data Point"], -25);
+
+                svg.selectAll("rect.hiresAndExitsSecond")
+                   .data([currentGroupedData[0]], d => {return d["Id"];})
+                   .enter()
+                   .append("rect")
+                   .attr("class", "hiresAndExitsSecond secondView")
+                   .attr("width", d => {return cat1RectWidth;})
+                   .attr("height", 35)
+                   .attr("x", arrowStartX)
+                   .attr("y", d => {return yScale(count) - 22;})
+                   .style("fill",d =>{return  categoryColors[categories.indexOf(d["Category"])];});
+
+                svg.selectAll("path.hiresAndExitsSecond")
+                 .data([currentGroupedData[1]], d => {return d["Id"];})
+                 .enter()
+                 .append("path")
+                 .attr("class", "hiresAndExitsSecond secondView")
+                 .attr("d", d => {return drawRightArrow(arrowStartX + cat1RectWidth, yScale(count) - 22, cat2ArrowWidth);})
+                 .style("fill",d =>{return  categoryColors[categories.indexOf(d["Category"])];});
+                
+
+                 svg.selectAll("text.hiresAndExitsSecond")
+                    .data(currentGroupedData, d => {return d["Id"]})
+                    .enter()
+                    .append("text")
+                    .attr("class", "hiresAndExitsSecond secondView")
+                    .attr("x", d => { 
+                       if (d.Category == categories[0])
+                        return arrowStartX + cat1RectWidth / 2 - 10;
+                      else
+                        return arrowStartX + cat1RectWidth + cat2ArrowWidth / 2 - 10;
+                    })
+                    .attr("y", d => {return yScale(count);})
+                    .text(d => {return d.Value});
+            }
+
+
+            if (dataPoints.indexOf(groupedByDataPoint[j]["Data Point"]) > -1)
+            {
+               svg.selectAll("text.labels")
+                 .data([totalValue], d => {return d["Id"];})
+                 .enter()
+                 .append("text")
+                 .attr("class", "labels firstView")
+                 .attr("y", d => {return yScale(count);})
+                 .attr("x", d => {return centralizeX(d["Data Point"], -18);})
+                 .text(d => {return d["Value"];});
+              if (groupedByDataPoint[j]["Data Point"] == "Total Employees"){
+
+               svg.selectAll("text.cat1")
+                 .data([currentGroupedData[0]], d => {return d["Id"];})
+                 .enter()
+                 .append("text")
+                 .attr("class", "cat1 secondView")
+                 .attr("y", d => {return yScale(count);})
+                 .attr("x", centerPoint - totalWidth / 2 + cat1Width / 2)
+                 .text(d => {return d["Value"];});
+
+               svg.selectAll("text.cat2")
+                 .data([currentGroupedData[1]], d => {return d["Id"];})
+                 .enter()
+                 .append("text")
+                 .attr("class", "cat2 secondView")
+                 .attr("y", d => {return yScale(count);})
+                 .attr("x", centerPoint - totalWidth / 2 + cat1Width + cat2Width / 2 -10)
+                 .text(d => {return d["Value"];})
+                 .style("fill", "#fff");
               }
+              
 
               if (groupedByDataPoint[j]["Data Point"] != "Total Employees"){
                  svg.selectAll("text.percent")
-                   .data([thisData], d => {return d["Id"];})
+                   .data([totalValue], d => {return d["Id"];})
                    .enter()
                    .append("text")
-                   .attr("class", "percent")
+                   .attr("class", "percent firstView")
                    .attr("y", d => {return yScale(count);})
                    .attr("x", d => {return centralizeX(d["Data Point"], 10);})
-                   .text("(" + Math.floor((value / totalInt)*100) + "%)");
+                   .text("(" + Math.floor((value / totalObj.Value)*100) + "%)");
               }
             }
 
             else {
-              
+
                 // draw promotions
-               if (groupedByDataPoint[j]["Data Point"] == "Promotions" && +thisData["Value"] > 0){
+               if (groupedByDataPoint[j]["Data Point"] == "Promotions" && +totalValue["Value"] > 0){
                  var startX = promoDemotionsScale(1);
                  var startY = yScale(count) - 30;
                  console.log(startX);
                  
                  svg.selectAll("path.upArrow")
-                    .data([thisData], d => {return d["Id"];})
+                    .data([totalValue], d => {return d["Id"];})
                     .enter()
                     .append("path")
-                    .attr("class", "upArrow")
+                    .attr("class", "upArrow firstView")
                     .attr("d", drawUpArrow(startX, startY, 25))
                     .attr("fill", "green");
 
                  svg.selectAll("text.promotions")
-                   .data([thisData], d => {return d["Id"];})
+                   .data([totalValue], d => {return d["Id"];})
                    .enter()
                    .append("text")
-                   .attr("class", "promotions")
+                   .attr("class", "promotions firstView")
                    .attr("y", startY)
                    .attr("x", d => {return promoDemotionsScale(0) + 15;})
                    .text(value);
@@ -262,23 +515,23 @@
                 }
 
                // draw demotions
-               if (groupedByDataPoint[j]["Data Point"] == "Demotions" && +thisData["Value"] > 0){
+               if (groupedByDataPoint[j]["Data Point"] == "Demotions" && +totalValue["Value"] > 0){
                  var startX = promoDemotionsScale(4);
                  var startY = yScale(count) - 50;
                  console.log(startX);
                  // draw promotions
                  svg.selectAll("path.downArrow")
-                    .data([thisData], d => {return d["Id"];})
+                    .data([totalValue], d => {return d["Id"];})
                     .enter()
                     .append("path")
-                    .attr("class", "downArrow")
+                    .attr("class", "downArrow firstView")
                     .attr("d", drawDownArrow(startX, startY, 25))
                     .attr("fill", "#fc94e5");
                   svg.selectAll("text.demotions")
-                   .data([thisData], d => {return d["Id"];})
+                   .data([totalValue], d => {return d["Id"];})
                    .enter()
                    .append("text")
-                   .attr("class", "demotions")
+                   .attr("class", "demotions firstView")
                    .attr("y", yScale(count) - 30)
                    .attr("x", d => {return promoDemotionsScale(5) - 10;})
                    .text(value);

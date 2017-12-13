@@ -8,7 +8,7 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 7,6,Executive,Promotions,Female,0
 8,6,Executive,Promotions,Male,0
 9,6,Executive,Total Employees,Female,144
-10,6,Executive,Total Employees,Male,22
+10,6,Executive,Total Employees,Male,72
 11,2,General Staff,Demotions,Female,0
 12,2,General Staff,Demotions,Male,0
 13,2,General Staff,Exits,Female,83
@@ -49,3 +49,13 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 48,5,Senior Manager,Promotions,Male,1
 49,5,Senior Manager,Demotions,Female,0
 50,5,Senior Manager,Demotions,Male,0
+51,1,Senior Manager,Hires,Female,15
+52,1,Senior Manager,Hires,Male,7
+53,1,Senior Manager,Total Employees,Female,426
+54,1,Senior Manager,Total Employees,Male,225
+55,1,Senior Manager,Exits,Female,60
+56,1,Senior Manager,Exits,Male,15
+57,1,Senior Manager,Promotions,Female,4
+58,1,Senior Manager,Promotions,Male,1
+59,1,Senior Manager,Demotions,Female,0
+60,1,Senior Manager,Demotions,Male,0

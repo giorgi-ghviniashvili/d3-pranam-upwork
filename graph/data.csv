@@ -7,7 +7,7 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 6,6,Executive,Hires,Male,1
 7,6,Executive,Promotions,Female,0
 8,6,Executive,Promotions,Male,0
-9,6,Executive,Total Employees,Female,44
+9,6,Executive,Total Employees,Female,144
 10,6,Executive,Total Employees,Male,22
 11,2,General Staff,Demotions,Female,0
 12,2,General Staff,Demotions,Male,0

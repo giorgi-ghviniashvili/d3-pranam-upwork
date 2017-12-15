@@ -8,12 +8,14 @@
         margin: auto;
         margin-top: 40px;
       }
+      
       /* The container */
 .container {
     
     position: relative;
-    padding-left: 35px;
+    padding-left: 45px;
     margin-bottom: 12px;
+
     cursor: pointer;
     font-size: 22px;
     -webkit-user-select: none;
@@ -21,9 +23,12 @@
     -ms-user-select: none;
     user-select: none;
     padding-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-radius: 5px; 
 }
 .container:hover{
-  background-color: #724616;
+  background-color: #2F353B;
   color:#fff;
 }
 /* Hide the browser's default radio button */
@@ -41,6 +46,7 @@
     width: 25px;
     background-color: #eee;
     border-radius: 50%;
+    margin:10px;
 }
 
 /* On mouse-over, add a grey background color */
@@ -201,12 +207,15 @@
       var categoryNumColumnWidth = 20;
       var dataPoints = ["Hires", "Total Employees", "Exits"];
 
-      var categoryColors = ["ccc", "#56217a"];
-      var categoryTextColors = ["#ef8f4c", "#fff"];
-      var promoDemoColors = {
-          "Promotions": "green",
-          "Demotions": "#fc94e5"
+      var categoryColors = ["#BFBFBF", "#8E44AD"];
+      var categoryTextColors = ["#2C3E50", "#fff"];
+      var colors = {
+          Promotions: "#26C281",
+          Demotions: "#D05454",
+          totalEmp: "#4C87B9",
+          hiresAndExits: "#4C87B9"
       };
+      var fontColor = "#fff";
 
       function switchCategory(value){
         var firstView = document.getElementsByClassName('firstView');
@@ -363,7 +372,7 @@
              .attr("height", 40)
              .attr("x", d => {return centralizeX("Total Employees", -1 * (rectScale(d.Value) / 2));})
              .attr("y", d => {return yScale(d.LevelName) - 25;})
-             .style("fill", "#4286f4");
+             .style("fill", colors["totalEmp"]);
 
         // draw arrows
         svg.selectAll("path.hiresAndExits")
@@ -374,7 +383,7 @@
            .attr("d", d => {
             var arrowWidth = arrowScale(+d.Value);
             return drawRightArrow(centralizeX(d["Data Point"], -1 * (arrowWidth / 2 + 4.5)), yScale(d.LevelName) - 22, arrowWidth);})
-           .attr("fill", "#42b6f4");
+           .attr("fill", colors["hiresAndExits"]);
 
             // draw promotions
 
@@ -384,7 +393,7 @@
                 .append("path")
                 .attr("class", "upArrow firstView")
                 .attr("d", d=> {return drawUpArrow(promoDemotionsScale(2), yScale(d.LevelName) - 35, 25);})
-                .attr("fill", "green");
+                .attr("fill", colors.Promotions);
 
              svg.selectAll("text.promotions")
                .data(totalData.where(x => x["Data Point"] == "Promotions" && +x.Value > 0), d => {return d["Id"];})
@@ -402,7 +411,7 @@
             .append("path")
             .attr("class", "downArrow firstView")
             .attr("d", d => {return drawDownArrow(promoDemotionsScale(4), yScale(d.LevelName) - 50, 25);})
-            .attr("fill", "#fc94e5");
+            .attr("fill", colors.Demotions);
 
           svg.selectAll("text.demotions")
            .data(totalData.where(x => x["Data Point"] == "Demotions" && +x.Value > 0), d => {return d["Id"];})
@@ -428,7 +437,8 @@
             return centralizeX(d["Data Point"], -10);
           })
            .attr("y", d => {return yScale(d.LevelName);})
-           .text(d => { return d.Value; });
+           .text(d => { return d.Value; })
+           .attr("fill", fontColor);
 
         
         ///////////////////////////////////////////////////////
@@ -580,7 +590,7 @@
              .attr("class", "hiresAndExits secondView")
              .attr("d", d => {
               return drawRightArrow(d.x + d.width, yScale(d.LevelName) - 22, 0);})
-             .attr("fill", "#42b6f4"); 
+             .attr("fill", colors.hiresAndExits); 
 
 
           var promoDemotionsCats = [];
@@ -640,7 +650,7 @@
                     _x += _width;
                 }
            }
-                      svg.selectAll("rect.promoDemotions")
+            svg.selectAll("rect.promoDemotions")
              .data(promoDemotionsCats, d => {return d.Id; })
              .enter()
              .append("rect")
@@ -666,7 +676,7 @@
                   return drawDownArrow(d.x, yScale(d.LevelName) - 37.5, 0);
               })
              .attr("fill", d => { 
-              return  promoDemoColors[d["Data Point"]];
+              return  colors[d["Data Point"]];
 
               }); 
 

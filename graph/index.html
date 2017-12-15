@@ -356,8 +356,8 @@
            .append("text")
            .attr("class", "level")
            .attr("y", d => {return yScale(d.values[0].LevelName);})
-           .attr("x", 20)
-           .text(d => {return d.values[0]["LevelNum"]});
+           .attr("x", 0)
+           .text(d => {return d.values[0]["LevelName"]});
         // end of headers
 
         // middle rects        

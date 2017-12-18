@@ -207,8 +207,16 @@
       var categoryNumColumnWidth = 20;
       var dataPoints = ["Hires", "Total Employees", "Exits"];
 
-      var categoryColors = ["#BFBFBF", "#8E44AD"];
-      var categoryTextColors = ["#2C3E50", "#fff"];
+      var categoryColors = ["#BFBFBF", "#8E44AD","#c5bf66","#BF55EC","#f36a5a","#EF4836","#9A12B3","#c8d046","#E26A6A",
+ "#32c5d2","#8877a9","#ACB5C3","#e35b5a","#2f353b","#e43a45","#f2784b",
+ "#796799","#26C281","#555555","#525e64","#8E44AD","#4c87b9","#bfcad1",
+ "#67809F","#578ebe","#c5b96b","#4DB3A2","#e7505a","#D91E18","#1BBC9B",
+ "#3faba4","#d05454","#8775a7","#8775a7","#8E44AD","#f3c200","#4B77BE",
+ "#c49f47","#44b6ae","#36D7B7","#94A0B2","#9B59B6","#E08283","#3598dc",
+ "#F4D03F","#F7CA18","#22313F","#2ab4c0","#5e738b","#BFBFBF","#2C3E50",
+ "#5C9BD1","#95A5A6","#E87E04","#29b4b6","#1BA39C"];
+ 
+      var categoryTextColors = ["#2C3E50", "#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff","#fff"];
       var colors = {
           Promotions: "#26C281",
           Demotions: "#D05454",
@@ -265,6 +273,10 @@
           levelNames.push(_data[i].LevelName);
           var byDataPoint = _data[i].values.groupBy(["Data Point"]);
           for (var j = 0; j < byDataPoint.length; j++) {
+            var sum = 0;
+            for (var k = 0; k < byDataPoint[j].values.length; k++) {
+              sum += +byDataPoint[j].values[k].Value;
+            }
             totalData.push({
               Category: "Total",
               "Data Point": byDataPoint[j]["Data Point"],
@@ -272,17 +284,16 @@
               Id: (+byDataPoint[j].values[0].Id + (+byDataPoint[j].values[1].Id)) / 2,
               LevelName: byDataPoint[j].values[0].LevelName,
               LevelNum: byDataPoint[j].values[0].LevelNum,
-              Value: (+byDataPoint[j].values[0].Value + (+byDataPoint[j].values[1].Value))
+              Value: sum
             });
           }
         }
 
         // Male or Female, Asian/Eurpian
         var categories = [];
-        _data[0].values.groupBy(["Category"]).forEach(x => {
+        _data[0].values.groupBy(["Category"]).orderBy(x => x.Category).forEach(x => {
             categories.push(x["Category"]);
         });
-
         // setting up scales
         var yScale = d3.scaleBand()
               .domain(levelNames)
@@ -471,7 +482,10 @@
            for (var i = 0; i < _data.length; i++) {
                 var thisData = _data[i];
                 var totalEmployee = thisData.values.where(x => x["Data Point"] == "Total Employees").orderBy(x => x.Category);
-                var totalValue = +totalEmployee[0].Value + (+totalEmployee[1].Value);
+                var totalValue = 0;
+                for(var k = 0; k < totalEmployee.length; k++) {
+                  totalValue += +totalEmployee[k].Value;
+                }
                 if (totalValue == 0)
                       continue;
                 var totalWidth = rectScale(totalValue);
@@ -523,7 +537,10 @@
             for (var i = 0; i < _data.length; i++) {
                 var thisData = _data[i];
                 var totalEmployee = thisData.values.where(x => x["Data Point"] == "Hires").orderBy(x => x.Category);
-                var totalValue = +totalEmployee[0].Value + (+totalEmployee[1].Value);
+                var totalValue = 0;
+                for(var k = 0; k < totalEmployee.length; k++) {
+                  totalValue += +totalEmployee[k].Value;
+                }
                   if (totalValue == 0)
                       continue;
 
@@ -546,7 +563,10 @@
                 }
 
                 totalEmployee = thisData.values.where(x => x["Data Point"] == "Exits").orderBy(x => x.Category);
-                totalValue = +totalEmployee[0].Value + (+totalEmployee[1].Value);
+                var totalValue = 0;
+                for(var k = 0; k < totalEmployee.length; k++) {
+                  totalValue += +totalEmployee[k].Value;
+                }
 
 
                 totalWidth = arrowScale(totalValue);
@@ -584,7 +604,7 @@
 
            // draw arrows
           svg.selectAll("path.hiresAndExitsCatsArrows")
-             .data(hiresAndExitsCats.where(x => x.Category == categories[1]), d => {return d["Id"];})
+             .data(hiresAndExitsCats.where(x => x.Category == categories[categories.length - 1]), d => {return d["Id"];})
              .enter()
              .append("path")
              .attr("class", "hiresAndExits secondView")
@@ -598,8 +618,10 @@
            for (var i = 0; i < _data.length; i++) {
                 var thisData = _data[i];
                 var totalEmployee = thisData.values.where(x => x["Data Point"] == "Promotions").orderBy(x => x.Category);
-                
-                var totalValue = +totalEmployee[0].Value + (+totalEmployee[1].Value);
+                var totalValue = 0;
+                for(var k = 0; k < totalEmployee.length; k++) {
+                  totalValue += +totalEmployee[k].Value;
+                }
 
                 var promoScale = d3.scaleLinear()
                                 .domain([0, totalValue])
@@ -625,8 +647,10 @@
                 }
 
                 totalEmployee = thisData.values.where(x => x["Data Point"] == "Demotions").orderBy(x => x.Category);
-
-                totalValue = +totalEmployee[0].Value + (+totalEmployee[1].Value);
+                var totalValue = 0;
+                for(var k = 0; k < totalEmployee.length; k++) {
+                  totalValue += +totalEmployee[k].Value;
+                }
 
                 promoScale.domain([0, totalValue]);
 

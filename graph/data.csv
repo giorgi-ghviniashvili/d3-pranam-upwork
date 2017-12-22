@@ -1,61 +1,76 @@
 Id,LevelNum,LevelName,Data Point,Category,Value
-1,6,Executive,Demotions,Female,0
-2,6,Executive,Demotions,Male,0
-3,6,Executive,Exits,Female,6
-4,6,Executive,Exits,Male,3
-5,6,Executive,Hires,Female,2
-6,6,Executive,Hires,Male,1
-7,6,Executive,Promotions,Female,0
-8,6,Executive,Promotions,Male,0
-9,6,Executive,Total Employees,Female,144
-10,6,Executive,Total Employees,Male,72
-11,2,General Staff,Demotions,Female,0
-12,2,General Staff,Demotions,Male,0
-13,2,General Staff,Exits,Female,83
-14,2,General Staff,Exits,Male,169
-15,2,General Staff,Hires,Female,59
-16,2,General Staff,Hires,Male,86
-17,2,General Staff,Promotions,Female,71
-18,2,General Staff,Promotions,Male,64
-19,2,General Staff,Total Employees,Female,730
-20,2,General Staff,Total Employees,Male,564
-21,3,Junior Manager,Demotions,Female,0
-22,3,Junior Manager,Demotions,Male,0
-23,3,Junior Manager,Exits,Female,235
-24,3,Junior Manager,Exits,Male,225
-25,3,Junior Manager,Hires,Female,80
-26,3,Junior Manager,Hires,Male,53
-27,3,Junior Manager,Promotions,Female,56
-28,3,Junior Manager,Promotions,Male,40
-29,3,Junior Manager,Total Employees,Female,592
-30,3,Junior Manager,Total Employees,Male,246
-31,4,Middle Manager,Exits,Female,18
-32,4,Middle Manager,Exits,Male,41
-33,4,Middle Manager,Hires,Female,22
-34,4,Middle Manager,Hires,Male,34
-35,4,Middle Manager,Total Employees,Female,187
-36,4,Middle Manager,Total Employees,Male,519
-37,4,Middle Manager,Promotions,Female,33
-38,4,Middle Manager,Promotions,Male,9
-39,4,Middle Manager,Demotions,Female,0
-40,4,Middle Manager,Demotions,Male,10
-41,5,Senior Manager,Hires,Female,15
-42,5,Senior Manager,Hires,Male,7
-43,5,Senior Manager,Total Employees,Female,426
-44,5,Senior Manager,Total Employees,Male,225
-45,5,Senior Manager,Exits,Female,60
-46,5,Senior Manager,Exits,Male,15
-47,5,Senior Manager,Promotions,Female,4
-48,5,Senior Manager,Promotions,Male,1
-49,5,Senior Manager,Demotions,Female,0
-50,5,Senior Manager,Demotions,Male,0
-51,1,Worker,Hires,Female,15
-52,1,Worker,Hires,Male,7
-53,1,Worker,Total Employees,Female,426
-54,1,Worker,Total Employees,Male,225
-55,1,Worker,Exits,Female,60
-56,1,Worker,Exits,Male,15
-57,1,Worker,Promotions,Female,4
-58,1,Worker,Promotions,Male,1
-59,1,Worker,Demotions,Female,10
-60,1,Worker,Demotions,Male,13
+1,5,Executive,Demotions,Asian,0
+2,5,Executive,Demotions,Other,0
+3,5,Executive,Exits,Asian,6
+4,5,Executive,Exits,Other,3
+5,5,Executive,Hires,Asian,2
+6,5,Executive,Hires,Other,1
+7,5,Executive,Promotions,Asian,0
+8,5,Executive,Promotions,Other,0
+9,5,Executive,Total Employees,Asian,144
+10,5,Executive,Total Employees,Other,72
+11,1,General Staff,Demotions,Asian,0
+12,1,General Staff,Demotions,Other,0
+13,1,General Staff,Exits,Asian,83
+14,1,General Staff,Exits,Other,169
+15,1,General Staff,Hires,Asian,59
+16,1,General Staff,Hires,Other,86
+17,1,General Staff,Promotions,Asian,71
+18,1,General Staff,Promotions,Other,64
+19,1,General Staff,Total Employees,Asian,730
+20,1,General Staff,Total Employees,Other,564
+21,2,Junior Manager,Demotions,Asian,0
+22,2,Junior Manager,Demotions,Other,0
+23,2,Junior Manager,Exits,Asian,235
+24,2,Junior Manager,Exits,Other,225
+25,2,Junior Manager,Hires,Asian,80
+26,2,Junior Manager,Hires,Other,53
+27,2,Junior Manager,Promotions,Asian,56
+28,2,Junior Manager,Promotions,Other,40
+29,2,Junior Manager,Total Employees,Asian,592
+30,2,Junior Manager,Total Employees,Other,246
+31,3,Middle Manager,Exits,Asian,18
+32,3,Middle Manager,Exits,Other,41
+33,3,Middle Manager,Hires,Asian,22
+34,3,Middle Manager,Hires,Other,34
+35,3,Middle Manager,Total Employees,Asian,187
+36,3,Middle Manager,Total Employees,Other,519
+37,3,Middle Manager,Promotions,Asian,33
+38,3,Middle Manager,Promotions,Other,9
+39,3,Middle Manager,Demotions,Asian,0
+40,3,Middle Manager,Demotions,Other,10
+41,4,Senior Manager,Hires,Asian,15
+42,4,Senior Manager,Hires,Other,7
+43,4,Senior Manager,Total Employees,Asian,426
+44,4,Senior Manager,Total Employees,Other,225
+45,4,Senior Manager,Exits,Asian,60
+46,4,Senior Manager,Exits,Other,15
+47,4,Senior Manager,Promotions,Asian,4
+48,4,Senior Manager,Promotions,Other,1
+49,4,Senior Manager,Demotions,Asian,0
+50,4,Senior Manager,Demotions,Other,0
+51,5,Executive,Demotions,White,0
+53,5,Executive,Exits,White,6
+55,5,Executive,Hires,White,2
+57,5,Executive,Promotions,White,0
+59,5,Executive,Total Employees,White,144
+61,1,General Staff,Demotions,White,0
+63,1,General Staff,Exits,White,83
+65,1,General Staff,Hires,White,59
+67,1,General Staff,Promotions,White,71
+69,1,General Staff,Total Employees,White,730
+71,2,Junior Manager,Demotions,White,0
+73,2,Junior Manager,Exits,White,235
+75,2,Junior Manager,Hires,White,80
+77,2,Junior Manager,Promotions,White,56
+79,2,Junior Manager,Total Employees,White,592
+81,3,Middle Manager,Exits,White,18
+83,3,Middle Manager,Hires,White,22
+85,3,Middle Manager,Total Employees,White,187
+87,3,Middle Manager,Promotions,White,33
+89,3,Middle Manager,Demotions,White,0
+91,4,Senior Manager,Hires,White,15
+93,4,Senior Manager,Total Employees,White,426
+95,4,Senior Manager,Exits,White,60
+97,4,Senior Manager,Promotions,White,4
+99,4,Senior Manager,Demotions,White,0

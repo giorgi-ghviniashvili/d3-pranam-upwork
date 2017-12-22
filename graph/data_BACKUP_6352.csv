@@ -50,6 +50,32 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 49,4,Senior Manager,Demotions,Asian,0
 50,4,Senior Manager,Demotions,Other,0
 51,5,Executive,Demotions,White,0
+<<<<<<< HEAD
+53,5,Executive,Exits,White,6
+55,5,Executive,Hires,White,2
+57,5,Executive,Promotions,White,0
+59,5,Executive,Total Employees,White,144
+61,1,General Staff,Demotions,White,0
+63,1,General Staff,Exits,White,83
+65,1,General Staff,Hires,White,59
+67,1,General Staff,Promotions,White,71
+69,1,General Staff,Total Employees,White,730
+71,2,Junior Manager,Demotions,White,0
+73,2,Junior Manager,Exits,White,235
+75,2,Junior Manager,Hires,White,80
+77,2,Junior Manager,Promotions,White,56
+79,2,Junior Manager,Total Employees,White,592
+81,3,Middle Manager,Exits,White,18
+83,3,Middle Manager,Hires,White,22
+85,3,Middle Manager,Total Employees,White,187
+87,3,Middle Manager,Promotions,White,33
+89,3,Middle Manager,Demotions,White,0
+91,4,Senior Manager,Hires,White,15
+93,4,Senior Manager,Total Employees,White,426
+95,4,Senior Manager,Exits,White,60
+97,4,Senior Manager,Promotions,White,4
+99,4,Senior Manager,Demotions,White,0
+=======
 52,5,Executive,Demotions,Black,0
 53,5,Executive,Exits,White,6
 54,5,Executive,Exits,Black,3
@@ -99,3 +125,4 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 98,4,Senior Manager,Promotions,Black,1
 99,4,Senior Manager,Demotions,White,0
 100,4,Senior Manager,Demotions,Black,0
+>>>>>>> 55edbbee51cc0fab06cd71af1e6540c7e49a8736

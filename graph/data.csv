@@ -1,9 +1,9 @@
 Id,LevelNum,LevelName,Data Point,Category,Value
 1,5,Executive,Total Employees,Total,824
-2,4,Senior Manager,Total Employees,Total,2 164
-3,3,Middle Manager,Total Employees,Total,4 216
-4,2,Junior Manager,Total Employees,Total,4 197
-5,1,General Staff,Total Employees,Total,21 475
+2,4,Senior Manager,Total Employees,Total,2164
+3,3,Middle Manager,Total Employees,Total,4216
+4,2,Junior Manager,Total Employees,Total,4197
+5,1,General Staff,Total Employees,Total,21475
 6,5,Executive,Hires,Total,44
 7,4,Senior Manager,Hires,Total,137
 8,3,Middle Manager,Hires,Total,380

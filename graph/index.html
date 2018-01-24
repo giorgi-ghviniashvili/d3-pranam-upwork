@@ -281,7 +281,7 @@
               Category: "Total",
               "Data Point": byDataPoint[j]["Data Point"],
               // average of the Ids
-              Id: (+byDataPoint[j].values[0].Id + (+byDataPoint[j].values[1].Id)) / 2,
+              Id: sum / byDataPoint[j].values.length,
               LevelName: byDataPoint[j].values[0].LevelName,
               LevelNum: byDataPoint[j].values[0].LevelNum,
               Value: sum
@@ -379,7 +379,9 @@
              .enter()
              .append("rect")
              .attr("class", "totalEmp firstView")
-             .attr("width", d => {return rectScale(d.Value);})
+             .attr("width", d => {
+                return rectScale(d.Value);
+              })
              .attr("height", 40)
              .attr("x", d => {return centralizeX("Total Employees", -1 * (rectScale(d.Value) / 2));})
              .attr("y", d => {return yScale(d.LevelName) - 25;})

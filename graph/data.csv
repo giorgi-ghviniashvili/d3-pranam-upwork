@@ -1,4 +1,5 @@
 Id,LevelNum,LevelName,Data Point,Category,Value
+<<<<<<< HEAD
 1,11,Exec,Total Employees,Black South African,287
 2,02,SBG05,Total Employees,Black South African,414
 3,03,SBG06,Total Employees,Black South African,5027
@@ -76,3 +77,25 @@ Id,LevelNum,LevelName,Data Point,Category,Value
 75,08,SBG11,Exits,Other,133
 76,09,SBG12,Exits,Other,163
 77,10,SBG13,Exits,Other,114
+=======
+1,5,Executive,Total Employees,Total,824
+2,4,Senior Manager,Total Employees,Total,2164
+3,3,Middle Manager,Total Employees,Total,4216
+4,2,Junior Manager,Total Employees,Total,4197
+5,1,General Staff,Total Employees,Total,21475
+6,5,Executive,Hires,Total,44
+7,4,Senior Manager,Hires,Total,137
+8,3,Middle Manager,Hires,Total,380
+9,2,Junior Manager,Hires,Total,412
+10,1,General Staff,Hires,Total,1486
+11,5,Executive,Exits,Total,81
+12,4,Senior Manager,Exits,Total,226
+13,3,Middle Manager,Exits,Total,484
+14,2,Junior Manager,Exits,Total,511
+15,1,General Staff,Exits,Total,1594
+16,5,Executive,Promotions,Total,0
+17,4,Senior Manager,Promotions,Total,82
+18,3,Middle Manager,Promotions,Total,216
+19,2,Junior Manager,Promotions,Total,359
+20,1,General Staff,Promotions,Total,445
+>>>>>>> 258f56264dec1ecdad782ba5202ab2c7c0ba312f

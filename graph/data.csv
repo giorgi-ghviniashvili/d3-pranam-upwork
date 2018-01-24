@@ -1,76 +1,78 @@
 Id,LevelNum,LevelName,Data Point,Category,Value
-1,5,Executive,Demotions,Asian,0
-2,5,Executive,Demotions,Other,0
-3,5,Executive,Exits,Asian,6
-4,5,Executive,Exits,Other,3
-5,5,Executive,Hires,Asian,2
-6,5,Executive,Hires,Other,1
-7,5,Executive,Promotions,Asian,0
-8,5,Executive,Promotions,Other,0
-9,5,Executive,Total Employees,Asian,144
-10,5,Executive,Total Employees,Other,72
-11,1,General Staff,Demotions,Asian,0
-12,1,General Staff,Demotions,Other,0
-13,1,General Staff,Exits,Asian,83
-14,1,General Staff,Exits,Other,169
-15,1,General Staff,Hires,Asian,59
-16,1,General Staff,Hires,Other,86
-17,1,General Staff,Promotions,Asian,71
-18,1,General Staff,Promotions,Other,64
-19,1,General Staff,Total Employees,Asian,730
-20,1,General Staff,Total Employees,Other,564
-21,2,Junior Manager,Demotions,Asian,0
-22,2,Junior Manager,Demotions,Other,0
-23,2,Junior Manager,Exits,Asian,235
-24,2,Junior Manager,Exits,Other,225
-25,2,Junior Manager,Hires,Asian,80
-26,2,Junior Manager,Hires,Other,53
-27,2,Junior Manager,Promotions,Asian,56
-28,2,Junior Manager,Promotions,Other,40
-29,2,Junior Manager,Total Employees,Asian,592
-30,2,Junior Manager,Total Employees,Other,246
-31,3,Middle Manager,Exits,Asian,18
-32,3,Middle Manager,Exits,Other,41
-33,3,Middle Manager,Hires,Asian,22
-34,3,Middle Manager,Hires,Other,34
-35,3,Middle Manager,Total Employees,Asian,187
-36,3,Middle Manager,Total Employees,Other,519
-37,3,Middle Manager,Promotions,Asian,33
-38,3,Middle Manager,Promotions,Other,9
-39,3,Middle Manager,Demotions,Asian,0
-40,3,Middle Manager,Demotions,Other,10
-41,4,Senior Manager,Hires,Asian,15
-42,4,Senior Manager,Hires,Other,7
-43,4,Senior Manager,Total Employees,Asian,426
-44,4,Senior Manager,Total Employees,Other,225
-45,4,Senior Manager,Exits,Asian,60
-46,4,Senior Manager,Exits,Other,15
-47,4,Senior Manager,Promotions,Asian,4
-48,4,Senior Manager,Promotions,Other,1
-49,4,Senior Manager,Demotions,Asian,0
-50,4,Senior Manager,Demotions,Other,0
-52,5,Executive,Demotions,Black,0
-54,5,Executive,Exits,Black,3
-56,5,Executive,Hires,Black,1
-58,5,Executive,Promotions,Black,0
-60,5,Executive,Total Employees,Black,72
-62,1,General Staff,Demotions,Black,0
-64,1,General Staff,Exits,Black,169
-66,1,General Staff,Hires,Black,86
-68,1,General Staff,Promotions,Black,64
-70,1,General Staff,Total Employees,Black,564
-72,2,Junior Manager,Demotions,Black,0
-74,2,Junior Manager,Exits,Black,225
-76,2,Junior Manager,Hires,Black,53
-78,2,Junior Manager,Promotions,Black,40
-80,2,Junior Manager,Total Employees,Black,246
-82,3,Middle Manager,Exits,Black,41
-84,3,Middle Manager,Hires,Black,34
-86,3,Middle Manager,Total Employees,Black,519
-88,3,Middle Manager,Promotions,Black,9
-90,3,Middle Manager,Demotions,Black,10
-92,4,Senior Manager,Hires,Black,7
-94,4,Senior Manager,Total Employees,Black,225
-96,4,Senior Manager,Exits,Black,15
-98,4,Senior Manager,Promotions,Black,1
-100,4,Senior Manager,Demotions,Black,0
+1,11,Exec,Total Employees,Black South African,287
+2,02,SBG05,Total Employees,Black South African,414
+3,03,SBG06,Total Employees,Black South African,5027
+4,04,SBG07,Total Employees,Black South African,3792
+5,05,SBG08,Total Employees,Black South African,4047
+6,06,SBG09,Total Employees,Black South African,3358
+7,07,SBG10,Total Employees,Black South African,2532
+8,08,SBG11,Total Employees,Black South African,3210
+9,09,SBG12,Total Employees,Black South African,2636
+10,10,SBG13,Total Employees,Black South African,997
+11,11,Exec,Total Employees,Other,537
+12,02,SBG05,Total Employees,Other,37
+13,03,SBG06,Total Employees,Other,285
+14,04,SBG07,Total Employees,Other,408
+15,05,SBG08,Total Employees,Other,415
+16,06,SBG09,Total Employees,Other,582
+17,07,SBG10,Total Employees,Other,563
+18,08,SBG11,Total Employees,Other,987
+19,09,SBG12,Total Employees,Other,1580
+20,10,SBG13,Total Employees,Other,1167
+21,10,SBG13,Promotions,Black South African,51
+22,02,SBG05,Promotions,Black South African,58
+23,03,SBG06,Promotions,Black South African,262
+24,04,SBG07,Promotions,Black South African,540
+25,05,SBG08,Promotions,Black South African,510
+26,06,SBG09,Promotions,Black South African,345
+27,07,SBG10,Promotions,Black South African,375
+28,08,SBG11,Promotions,Black South African,290
+29,09,SBG12,Promotions,Black South African,155
+30,10,SBG13,Promotions,Other,51
+31,02,SBG05,Promotions,Other,58
+32,03,SBG06,Promotions,Other,262
+33,04,SBG07,Promotions,Other,540
+34,05,SBG08,Promotions,Other,510
+35,06,SBG09,Promotions,Other,345
+36,07,SBG10,Promotions,Other,375
+37,08,SBG11,Promotions,Other,290
+38,09,SBG12,Promotions,Other,155
+39,11,Exec,Hires,Black South African,18
+40,02,SBG05,Hires,Black South African,17
+41,03,SBG06,Hires,Black South African,632
+42,04,SBG07,Hires,Black South African,192
+43,05,SBG08,Hires,Black South African,188
+44,06,SBG09,Hires,Black South African,135
+45,07,SBG10,Hires,Black South African,178
+46,08,SBG11,Hires,Black South African,323
+47,09,SBG12,Hires,Black South African,265
+48,10,SBG13,Hires,Black South African,85
+49,11,Exec,Hires,Other,13
+50,03,SBG06,Hires,Other,31
+51,04,SBG07,Hires,Other,6
+52,05,SBG08,Hires,Other,17
+53,06,SBG09,Hires,Other,17
+54,07,SBG10,Hires,Other,71
+55,08,SBG11,Hires,Other,88
+56,09,SBG12,Hires,Other,107
+57,10,SBG13,Hires,Other,43
+58,11,Exec,Exits,Black South African,21
+59,02,SBG05,Exits,Black South African,25
+60,03,SBG06,Exits,Black South African,533
+61,04,SBG07,Exits,Black South African,231
+62,05,SBG08,Exits,Black South African,233
+63,06,SBG09,Exits,Black South African,205
+64,07,SBG10,Exits,Black South African,160
+65,08,SBG11,Exits,Black South African,376
+66,09,SBG12,Exits,Black South African,312
+67,10,SBG13,Exits,Black South African,108
+68,11,Exec,Exits,Other,55
+69,02,SBG05,Exits,Other,3
+70,03,SBG06,Exits,Other,31
+71,04,SBG07,Exits,Other,39
+72,05,SBG08,Exits,Other,33
+73,06,SBG09,Exits,Other,55
+74,07,SBG10,Exits,Other,43
+75,08,SBG11,Exits,Other,133
+76,09,SBG12,Exits,Other,163
+77,10,SBG13,Exits,Other,114
